@@ -509,7 +509,7 @@ export class SshSession extends DurableObject<Env> {
     this.closeStatusSession();
 
     this.statusBootstrapping = (async () => {
-      const socket = await connectToHost(config.host, config.port);
+      const socket = await connectToHost(this.env, config.host, config.port);
 
       const noopWs = {
         send: () => {},
@@ -695,7 +695,7 @@ export class SshSession extends DurableObject<Env> {
     if (this.sshSession) return;
 
     this.bootstrapping = (async () => {
-      const socket = await connectToHost(config.host, config.port);
+      const socket = await connectToHost(this.env, config.host, config.port);
 
       this.connectionConfig = config;
       const session = new SSHSession(ws, socket, config, false, false);
